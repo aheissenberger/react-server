@@ -1,0 +1,59 @@
+"use client";
+// works when not defined as client component
+import { useActionState } from "@lazarv/react-server/router";
+import { ZodIssue } from "zod";
+
+//import type { ZodIssue } from "zod";
+import { createOrUpdateNoteRS, Note } from "../actions";
+
+export default function NoteForm({ note }: { note: Note }) {
+  const { formData, error } = useActionState<
+    typeof createOrUpdateNoteRS,
+    string & Error & ZodIssue[]
+  >(createOrUpdateNoteRS);
+
+  return (
+    <form action={createOrUpdateNoteRS}>
+      {note?.id && <input type="hidden" name="id" value={note.id} />}
+      <div>
+        <label>
+          Title:
+          <input
+            defaultValue={formData?.title ?? note.title}
+            type="text"
+            name="title"
+            //disabled={isPending}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Note:
+          <textarea
+            defaultValue={formData?.note ?? note.note}
+            name="note"
+            //disabled={isPending}
+          ></textarea>
+        </label>
+      </div>
+      {error?.map?.(({ message }, i) => (
+        <p key={i} className="error">
+          {message}
+        </p>
+      )) ??
+        (error && <p className="error">{error?.toString()}</p>)}
+      <div className="button-group">
+        <a href="/forms" className="button">
+          Cancel
+        </a>
+        <button
+          type="submit"
+          className="button primary"
+          //disabled={isPending}
+        >
+          Save Note
+        </button>
+      </div>
+    </form>
+  );
+}

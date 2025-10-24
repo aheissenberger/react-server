@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@lazarv/react-server": "workspace:^"
+    "@lazarv/react-server": "workspace:^",
+    "better-sqlite3": "^11.9.1",
+    "react": "0.0.0-experimental-ead92181-20251010",
+    "zod": "^3.23.8"
   }
 }

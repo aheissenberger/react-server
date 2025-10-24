@@ -57,6 +57,10 @@ select {
   transition: border-color 0.2s;
 }
 
+input:disabled,
+select:disabled,
+textarea:disabled,
+button:disabled,
 textarea[readonly] {
   background-color: #eee;
   color: #888;

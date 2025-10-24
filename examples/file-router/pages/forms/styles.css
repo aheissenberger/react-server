@@ -57,15 +57,12 @@ select {
   transition: border-color 0.2s;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-textarea:focus,
-textarea:disabled {
+textarea[readonly] {
   background-color: #eee;
   color: #888;
   cursor: not-allowed;
 }
+
 select:focus {
   border-color: #0070f3;
   outline: none;

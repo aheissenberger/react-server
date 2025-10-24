@@ -5,7 +5,7 @@ import { useState } from "react";
 import { createOrUpdateNote, Note } from "../actions";
 
 export default function NoteForm({ note }: { note: Note }) {
-  const [editedNote, setEditedNote] = useState(true);
+  const [editedNote, setEditedNote] = useState(false);
   const [state, submitAction, isPending] = useActionState(createOrUpdateNote, {
     error: null,
   });
@@ -26,12 +26,17 @@ export default function NoteForm({ note }: { note: Note }) {
       <div>
         <label>
           Note:{" "}
-          <input type="checkbox" onChange={() => setEditedNote(!editedNote)} />{" "}
+          <input
+            type="checkbox"
+            value={editedNote}
+            onChange={() => setEditedNote(!editedNote)}
+          />{" "}
           allow edit
           <textarea
             defaultValue={note.note}
             name="note"
-            disabled={isPending || !editedNote}
+            disabled={isPending}
+            readOnly={!editedNote}
           ></textarea>
         </label>
       </div>

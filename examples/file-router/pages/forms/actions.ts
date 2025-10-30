@@ -19,6 +19,8 @@ export type FormError = string & Error & zod.ZodIssue[];
 
 type FormDataState = {
   error: FormError | null;
+  success: boolean;
+  redirectTo?: string;
 };
 
 export const addNoteSchema = zod.object({
@@ -58,6 +60,7 @@ export async function createOrUpdateNote(
   const result = addNoteSchema.safeParse(Object.fromEntries(formData));
   if (!result.success) {
     return {
+      success: false,
       error: result.error.issues,
     };
   }
@@ -73,7 +76,12 @@ export async function createOrUpdateNote(
   } else {
     db.prepare("INSERT INTO notes(title,note) VALUES (?,?)").run(title, note);
   }
-  redirect("/forms");
+  //redirect("/forms");
+  return {
+    error: null,
+    success: true,
+    redirectTo: "/forms",
+  };
 }
 
 export async function createOrUpdateNoteRS(formData: FormData) {

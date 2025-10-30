@@ -12,6 +12,9 @@ export default function NoteForm({ note }: { note: Note }) {
     error: null,
   });
   const { navigate } = useClient();
+  if (state.success && state?.redirectTo) {
+    navigate(state?.redirectTo);
+  }
 
   const handleCancel = () => {
     if (note?.id) {
